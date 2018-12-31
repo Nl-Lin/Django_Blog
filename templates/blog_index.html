@@ -1,0 +1,106 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}Blog of FTC{% endblock %}</title>
+    <script type="{% static 'bootstrap/js/jquery-3.2.1.min.js' %}"></script>
+    <script type="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="shortcut icon" href={% static 'media/favicon.ico' %}>
+
+    <style type="text/css">
+
+    </style>
+</head>
+
+<body >
+<br>
+<div class="container" >
+    <div class="jumbotron text-center" style="background-color: #87CEFA;margin-bottom:0;">
+        <h1 style="color:white">:) Hello~ <br>Face to Cheese
+           <br></h1>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <form class="form-inline">
+                <input class="form-control btn-info" type="text" placeholder="Search...">
+                <button class="btn btn-info " type="button">传送>>></button>
+            </form>
+        </nav>
+
+    </div>
+    <!-- 中间内容 -->
+    <div class="row">
+        {% block content %}
+            <div class="col-md-1"></div>
+            <div class="col-md-8" >
+                <div class="page-header">
+                    <h1 style="font-family: 黑体">博客首页 <small>置顶 </small></h1>
+                </div>
+                <class class="page-body">
+
+                    <!-- <blockquote> -->
+                    <p class="lead">博客由<code>Django</code>框架+<code>Nginx</code>服务器+<code>Bootstrap</code>搭建。<br>
+                    <blockquote class="blockquote-reverse">
+                        <a href="#">奶酪怪兽！</a>
+                    </blockquote>
+                    </p>
+                    <!-- </blockquote> -->
+
+                    {% for post in posts %}
+                        <div class="page-header">
+                            <h1 style="font-family: 黑体 ;display: inline" ><a href="{% url 'Blog:detail' post.pk %}" style="text-decoration: none;">{{ post.title }} </a></h1>
+
+                            <i class="glyphicon glyphicon-eye-open "  style="display:inline;margin-left: 2px;"></i>&nbsp;{{ post.views }}&nbsp;
+                            <i class="glyphicon glyphicon-tag "  style="display:inline;"></i>&nbsp;<a href="{% url 'Blog:cate' post.category.id %}">{{ post.category }}</a>&nbsp;
+                            <i class="glyphicon glyphicon-time "  style="display:inline;"></i>&nbsp;{{ post.created_time|date:"Y-m-d" }}
+                        </div>
+                        <figure class="highlight"><span class="c1">
+								<p class="lead">{{ post.body|truncatechars:200 }}</p></span>
+                        </figure>
+                        <br>
+                    {% endfor %}
+
+
+
+                </class>
+{#                <div class="col-md-4"></div>#}
+{#                <ul class="pagination" >#}
+{#                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>#}
+{#                    <li class="page-item"><a class="page-link" href="#">1</a></li>#}
+{#                    <li class="page-item active"><a class="page-link" href="#">2</a></li>#}
+{#                    <li class="page-item"><a class="page-link" href="#">3</a></li>#}
+{#                    <li class="page-item"><a class="page-link" href="#">Next</a></li>#}
+{#                </ul>#}
+                </div>
+        {% endblock content %}
+        <br>
+        <!-- 右边 分类 -->
+{% block  category %}
+
+
+        <div class="col-md-3 ">
+            <h2 class="hidden-xs hidden-sm hidden-md">热门文章</h2>
+            <nav class="navbar navbar-expand-md hidden-xs hidden-sm hidden-md bg-light ">
+                <ul class="nav">
+                    {% for top_3 in top_three %}
+                    <li class="nav-item">
+                        <a class="nav-link lead" href="{% url 'Blog:detail' top_3.id %}">{{ top_3.title }}</a>
+                    </li>
+                    {% endfor %}
+
+                </ul>
+            </nav>
+
+            <object type="application/x-shockwave-flash" style="outline:none;" data="http://cdn.abowman.com/widgets/penguins/penguins.swf?" width="300" height="200"><param name="movie" value="http://cdn.abowman.com/widgets/penguins/penguins.swf?"></param><param name="AllowScriptAccess" value="always"></param><param name="wmode" value="opaque"></param><param name="scale" value="noscale"/><param name="salign" value="tl"/></object>
+        </div>
+    {% endblock category%}
+    </div>
+
+</div>
+<!--  结束 -->
+<!--   				页脚 -->
+<br><br><br><br>
+<div class="jumbotron text-center" style="margin-bottom:0;background-color: #87CEFA;">
+    <strong><p style="color: white;font-family: monospace;">本站作者联系方式: <a href="">sheepman@Outlook.com</a></p></strong>
+</div>
+</body>
+</html>

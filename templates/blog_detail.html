@@ -1,0 +1,27 @@
+{% extends 'blog_index.html' %}
+{% block title %}
+    {{ detail.title }}
+{% endblock title %}
+
+{% block content %}
+      <br>  <br>  <br>  <br>
+ <div class="col-md-2"></div>
+
+
+        <div class="col-md-8">
+         <div class="page-header">
+            <h1 style="font-family: 黑体 ;display: inline" >{{ detail.title }}	</h1>
+            <i class="glyphicon glyphicon-eye-open "  style="display:inline;margin-left: 2px;"></i>&nbsp;{{ detail.views }}&nbsp;
+            <i class="glyphicon glyphicon-tag "  style="display:inline;"></i>&nbsp;<a href="">{{ detail.category }}</a>&nbsp;
+            <i class="glyphicon glyphicon-time "  style="display:inline;"></i>&nbsp;{{ detail.created_time|date:"Y-m-d "}}
+        </div>
+        <figure class="highlight"><span class="c1">
+								<p class="lead">{{ detail.body}}</p></span>
+        </figure>
+
+    </div>
+     <div class="col-md-2"></div>
+{% endblock content %}
+{% block category %}
+
+{% endblock category %}
